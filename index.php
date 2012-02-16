@@ -1,5 +1,9 @@
+<? require 'batters.php'; ?>
 <html>
 	<head>
+		<!-- Chosen Styling -->
+		<link rel="stylesheet" href="chosen/chosen/chosen.css">
+
 		<!-- Bootstrap Styling -->
 		<link rel="stylesheet" href="bootstrap/docs/assets/css/bootstrap.css">
 		<link rel="stylesheet" href="bootstrap/docs/assets/css/bootstrap-responsive.css">
@@ -12,29 +16,25 @@
 				padding-top:0px;
 				font-family: 'Ubuntu', sans-serif;
 			}
-			.player-search {
-				margin-top:4px;
-				border-radius:8px;
-			}
-			#chart {
+			#graph {
 				height:90%;
-			}
-			.chzn-container {
-				top:3px;
-			}
-			.chzn-container-multi .chzn-choices .search-field input {
-				height:18px;
 			}
 			.navbar-search input {
 				height:25px;
 				margin-top:3px;
 				font-size:14px;
-				margin-left:10px;
 			}
 			.navbar .brand {
 				font-family: 'Acme', sans-serif;
 				font-size:24px;
 				letter-spacing:1px;
+			}
+			.chzn-container-multi .chzn-choices .search-field input {
+				height:25px;
+				padding-top:5px;
+			}
+			.chzn-container {
+				top:1px;
 			}
 		</style>
 		<title>The Baseball Engine</title>
@@ -45,31 +45,25 @@
 	<div class="navbar">
 		<div class="navbar-inner">
 			<div class="container" style="width:auto;">
-				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</a>
 				<a class="brand" href="#">The Baseball Engine</a>
-				<div class="nav-collapse">
-					<form class="navbar-search pull-left">
-						<input type="text" class="typeahead span2" data-provide="typeahead" data-items="8">
-					</form>
-					<form class="navbar-search pull-left playerSearch2">
-						<input type="text" class="typeahead span2" data-provide="typeahead" data-items="8">
-					</form>
-					<ul class="nav pull-right">
-						<li class="divider-vertical"></li>
-						<li><a href="#">Go Premium</a></li>
-					</ul>
-				</div><!-- End nav-collapse -->
+				<form class="navbar-search pull-left">
+					<select data-placeholder="Select your batters..." class="chzn-select span6" multiple>
+						<? foreach ( $batters as $id => $player_names ): ?>
+						<option><?= $player_names; ?></option>
+						<? endforeach; ?>
+					</select>
+				</form>
+				<ul class="nav pull-right">
+					<li class="divider-vertical"></li>
+					<li><a href="#">Go Pro</a></li>
+				</ul>
 			</div><!-- End container -->
 		</div><!-- End navbar-inner -->
 	</div><!-- End navbar -->
 
 	<!-- Begin container-fluid -->
 	<div class="container-fluid">
-		<div id="chart"></div>
+		<div id="graph"></div>
 	</div>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -79,7 +73,10 @@
 <script type="text/javascript" src="bootstrap/docs/assets/js/bootstrap-dropdown.js"></script>
 <script type="text/javascript" src="highcharts/js/highcharts.src.js"></script>
 <script type="text/javascript" src="drawgraph.js"></script>
-<script type="text/javascript" src="batters.js"></script>
-<script type="text/javascript" src="typeahead.js"></script>
+<script type="text/javascript" src="chosen/chosen/chosen.jquery.js"></script>
+<script>
+	$(".chzn-select").chosen();
+	$(".chzn-select-deselect").chosen({allow_single_deselect:true}); 
+</script>
 </body>
 </html>

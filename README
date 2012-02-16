@@ -1,2 +1,3 @@
 The Baseball Engine
-A repository of baseball data that can be graphed over time
+A repository of baseball data that graphs statistics over time.
+The application includes Bootstrap and Chosen.

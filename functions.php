@@ -36,9 +36,50 @@
 		$sql = "SELECT name, id, position, team FROM players WHERE position != 'SP' AND position != 'RP' AND position != 'P'";
 		$res = mysql_query( $sql );
 		$players = array();
-		while ( $arr = mysql_fetch_array( $res ) )
-			$players[] = sprintf( '%s (%s %s)', $arr['name'], $arr['position'], $arr['team'] );
+		while ( $obj = mysql_fetch_object( $res ) )
+			$players[ $obj->id ] = $obj;
 		return $players;
+	}
+
+	function getLastDate(){
+		$sql = "SELECT day FROM data ORDER BY day DESC LIMIT 1";
+		$res = mysql_query( $sql );
+		$arr = mysql_fetch_array( $res );
+		return $arr['day'];
+	}
+
+	function getPlayerDetailsFromId( $id ){
+		$sql = sprintf( "SELECT name, team, position FROM players WHERE id = '%d'", $id );
+		$res = mysql_query( $sql );
+		$arr = mysql_fetch_array( $res );
+		return sprintf( '%s (%s %s)', $arr['name'], $arr['position'], $arr['team'] );
+	}
+
+	function getBEScoreBatters(){
+		$lastDay = getLastDate();
+		$sql = sprintf( "SELECT player_id FROM data WHERE statistic_id = 63 AND day = '%s'", $lastDay );
+		$res = mysql_query( $sql );
+		$ids = array();
+		while ( $arr = mysql_fetch_array( $res ) ){
+			$ids[] = $arr['player_id'];
+		}
+		$player_names = array();
+		foreach ( $ids as $key => $player_id ){
+			$player_names[] = getPlayerDetailsFromId( $player_id );
+		}
+		return $player_names;
+	}
+
+	function arrayMerge( array $array ){
+		$flatten = array();
+		array_walk_recursive( $array, function($value) use(&$flatten) {
+			$flatten[] = $value;
+		});
+		return $flatten;
+	}
+
+	function removeNulls( $nulls ){
+		return !is_null( $nulls );
 	}
 
 ?>

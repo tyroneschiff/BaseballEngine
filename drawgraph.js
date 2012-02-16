@@ -1,16 +1,21 @@
-var drawGraph = function(width,height){
-	//if (typeof chart != 'undefined' )
-	//	chart.showLoading();
+var getState = function(){
+	var data = {};
+	data.player_names = $('select').val();
+	return data;
+}
 
-	$.post( 'config.php', function(resp){
+var drawGraph = function(width,height){
+	if (typeof chart != 'undefined' ) chart.showLoading();
+	$.post( 'config.php', getState(), function(resp){
 		var config = $.extend( true, resp, {
 			chart: {
-				renderTo: 'chart',
+				renderTo: 'graph',
 				animation: false,
 				width: width,
 				height: height,
 				backgroundColor: 'transparent',
-				fontFamily: 'Ubuntu'
+				fontFamily: 'Ubuntu',
+				zoomType: 'x'
 			},
 			credits: {
 				enabled: true,
@@ -19,11 +24,20 @@ var drawGraph = function(width,height){
 			},
 			plotOptions: {
 				series: {
+					connectNulls: true,
+					lineWidth:5,
 					animation: false,
 					marker: {
-						fillcolor: '#FFFFFF',
-						lineWidth: 2,
-						lineColor: null
+						enabled: false,
+						fillColor:'#FFFFFF',
+						lineWidth:4,
+						radius:4,
+						lineColor:null,
+						states: {
+							hover: {
+								enabled: true
+							}
+						}
 					}
 				}
 			},
@@ -48,23 +62,24 @@ var drawGraph = function(width,height){
 						}
 					temp = '<b>'+this.x+'</b><br/>';
 					$(order).each( function(i,j){
-						temp += '<span style="color: '+points[j].series.color+'">' +points[j].series.name+': '+points[j].y+'</span><br/>';
+						temp += '<a style="color:'+points[j].series.color+';">' +points[j].series.name+': '+points[j].y+'</a><br>';
 					});
-					return temp;
+					return temp.slice(0,-4);
 				}
 			},
 			legend: {
 				itemStyle: {
 					fontFamily: 'Ubuntu',
 				},
-				borderColor: '#000000',
+				borderColor: 'white',
+				borderRadius:0,
 				align: 'center',
 				verticalAlign: 'bottom',
 				floating: false,
 				margin: 30,
+				symbolWidth:50
 			},
 			xAxis: {
-				tickInterval: 14,
 				lineColor: '#000000',
 				lineWidth: 2,
 				labels: {
@@ -80,7 +95,6 @@ var drawGraph = function(width,height){
 				title: {
 					text: null
 				},
-				min: 0,
 			},
 			title: {
 				text: null,
@@ -90,21 +104,27 @@ var drawGraph = function(width,height){
 	}, 'json' );
 };
 
+var $window = $(window);
+
 var resizeWidth = function(){
-	$(window).resize( function(){
+	$window.resize( function(){
 		return $('.container-fluid').width();
 	});
 };
 
 var resizeHeight = function(){
-	$(window).resize( function(){
+	$window.resize( function(){
 		var height = window.innerHeight;
-		var lessThan = height - 60;
-		$('#chart').css('height',lessThan);
+		var lessThan = height - 65;
+		$('#graph').css('height',lessThan);
 		return lessThan;
 	});
 };
 
 $(document).ready( function(){
-	drawGraph(resizeWidth(),resizeHeight());
+	drawGraph(resizeWidth(), resizeHeight());
+
+	$('select').chosen().on('change',function(){
+		drawGraph(resizeWidth(), resizeHeight());
+	});
 });
