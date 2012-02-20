@@ -1,7 +1,7 @@
 var getState = function(){
-	var data = {};
-	data.player_names = $('select').val();
-	return data;
+	var obj = {};
+	obj.player_names = $('select').val();
+	return obj;
 }
 
 var drawGraph = function(width,height){
@@ -18,9 +18,7 @@ var drawGraph = function(width,height){
 				zoomType: 'x'
 			},
 			credits: {
-				enabled: true,
-				text: 'BaseballEngine.com',
-				href: 'http://www.baseballengine.com'
+				enabled: false
 			},
 			plotOptions: {
 				series: {
@@ -68,17 +66,19 @@ var drawGraph = function(width,height){
 				}
 			},
 			legend: {
-				itemStyle: {
-					fontFamily: 'Ubuntu',
-				},
-				borderColor: 'white',
-				borderRadius:0,
-				align: 'center',
-				verticalAlign: 'bottom',
-				floating: false,
-				margin: 30,
-				symbolWidth:50
+				enabled: false
 			},
+			//	itemStyle: {
+			//		fontFamily: 'Ubuntu',
+			//	},
+			//	borderColor: 'white',
+			//	borderRadius:0,
+			//	align: 'center',
+			//	verticalAlign: 'bottom',
+			//	floating: false,
+			//	margin: 30,
+			//	symbolWidth:50
+			//},
 			xAxis: {
 				lineColor: '#000000',
 				lineWidth: 2,
@@ -126,5 +126,9 @@ $(document).ready( function(){
 
 	$('select').chosen().on('change',function(){
 		drawGraph(resizeWidth(), resizeHeight());
+	});
+
+	$('.search-choice-close').click( function(){
+		console.log($(this).prev().text()); /* the one that was just closed */
 	});
 });

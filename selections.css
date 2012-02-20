@@ -1,0 +1,46 @@
+.chzn-container-multi .chzn-choices li:nth-child(1):not(.search-field) {
+	background-color: #FFFFFF;
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4572A7', endColorstr='#678CB7', GradientType=0 );
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(25%, #4572A7), color-stop(50%, #507AAC), color-stop(75%, #5C83B2), color-stop(100%, #678CB7));
+	background-image: -webkit-linear-gradient(top, #4572A7 25%, #507AAC 50%, #5C83B2 75%, #678CB7 100%);
+	background-image: -moz-linear-gradient(top, #4572A7 25%, #507AAC 50%, #5C83B2 75%, #678CB7 100%);
+	background-image: -o-linear-gradient(top, #4572A7 25%, #507AAC 50%, #5C83B2 75%, #678CB7 100%);
+	background-image: -ms-linear-gradient(top, #4572A7 25%, #507AAC 50%, #5C83B2 75%, #678CB7 100%);
+	background-image: linear-gradient(top, #4572A7 25%, #507AAC 50%, #5C83B2 75%, #678CB7 100%); 
+	-webkit-box-shadow: 0 0 2px #4572A7 inset, 0 1px 0 rgba(0,0,0,0.05);
+	-moz-box-shadow   : 0 0 2px #4572A7 inset, 0 1px 0 rgba(0,0,0,0.05);
+	box-shadow        : 0 0 2px #4572A7 inset, 0 1px 0 rgba(0,0,0,0.05);
+	color: #FFF;
+	border: 1px solid #4572A7;
+}
+.chzn-container-multi .chzn-choices li:nth-child(2):not(.search-field) {
+	background-color:#FFFFFF;
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#AA4643', endColor='#B96866', GradientType=0 );
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(25%, #AA4643), color-stop(50%, #AF514E), color-stop(75%, #B45D5A), color-stop(100%, #B96866));
+	background-image: -webkit-linear-gradient(top, #AA4643 25%, #AF514E 50%, #B45D5A 75%, #B96866 100%);
+	background-image: -moz-linear-gradient(top, #AA4643 25%, #AF514E 50%, #B45D5A 75%, #B96866 100%);
+	background-image: -o-linear-gradient(top, #AA4643 25%, #AF514E 50%, #B45D5A 75%, #B96866 100%);
+	background-image: -ms-linear-gradient(top, #AA4643 25%, #AF514E 50%, #B45D5A 75%, #B96866 100%);
+	background-image: linear-gradient(top, #AA4643 25%, #AF514E 50%, #B45D5A 75%, #B96866 100%);
+	-webkit-box-shadow: 0 0 2px #AA4643 inset, 0 1px 0 rgba(0,0,0,0.05);
+	-moz-box-shadow   : 0 0 2px #AA4643 inset, 0 1px 0 rgba(0,0,0,0.05);
+	box-shadow        : 0 0 2px #AA4643 inset, 0 1px 0 rgba(0,0,0,0.05);
+	color: #FFF;
+	border: 1px solid #AA4643;
+}
+
+.chzn-container-multi .chzn-choices li:nth-child(3):not(.search-field) {
+	background-color:#FFFFFF;
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#89A54E', endColor='#9FB56F', GradientType=0 );
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(25%, #89A54E), color-stop(50%, #90AA59), color-stop(75%, #97B064), color-stop(100%, #9FB56F));
+	background-image: -webkit-linear-gradient(top, #89A54E 25%, #90AA59 50%, #97B064 75%, #9FB56F 100%);
+	background-image: -moz-linear-gradient(top, #89A54E 25%, #90AA59 50%, #97B064 75%, #9FB56F 100%);
+	background-image: -o-linear-gradient(top, #89A54E 25%, #90AA59 50%, #97B064 75%, #9FB56F 100%);
+	background-image: -ms-linear-gradient(top, #89A54E 25%, #90AA59 50%, #97B064 75%, #9FB56F 100%);
+	background-image: linear-gradient(top, #89A54E 25%, #90AA59 50%, #97B064 75%, #9FB56F 100%);
+	-webkit-box-shadow: 0 0 2px #89A54E inset, 0 1px 0 rgba(0,0,0,0.05);
+	-moz-box-shadow   : 0 0 2px #89A54E inset, 0 1px 0 rgba(0,0,0,0.05);
+	box-shadow        : 0 0 2px #89A54E inset, 0 1px 0 rgba(0,0,0,0.05);
+	color: #FFF;
+	border: 1px solid #89A54E;
+}
