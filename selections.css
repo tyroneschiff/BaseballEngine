@@ -44,3 +44,35 @@
 	color: #FFF;
 	border: 1px solid #89A54E;
 }
+
+.chzn-container-multi .chzn-choices li:nth-child(4):not(.search-field) {
+	background-color:#FFFFFF;
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#80699B', endColor='#9785AD', GradientType=0 );
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(25%, #80699B), color-stop(50%, #8772A1), color-stop(75%, #8F7BA7), color-stop(100%, #9785AD));
+	background-image: -webkit-linear-gradient(top, #80699B 25%, #8772A1 50%, #8F7BA7 75%, #9785AD 100%);
+	background-image: -moz-linear-gradient(top, #80699B 25%, #8772A1 50%, #8F7BA7 75%, #9785AD 100%);
+	background-image: -o-linear-gradient(top, #80699B 25%, #8772A1 50%, #8F7BA7 75%, #9785AD 100%);
+	background-image: -ms-linear-gradient(top, #80699B 25%, #8772A1 50%, #8F7BA7 75%, #9785AD 100%);
+	background-image: linear-gradient(top, #80699B 25%, #8772A1 50%, #8F7BA7 75%, #9785AD 100%);
+	-webkit-box-shadow: 0 0 2px #80699B inset, 0 1px 0 rgba(0,0,0,0.05);
+	-moz-box-shadow   : 0 0 2px #80699B inset, 0 1px 0 rgba(0,0,0,0.05);
+	box-shadow        : 0 0 2px #80699B inset, 0 1px 0 rgba(0,0,0,0.05);
+	color: #FFF;
+	border: 1px solid #80699B;
+}
+
+.chzn-container-multi .chzn-choices li:nth-child(5):not(.search-field) {
+	background-color:#FFFFFF;
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3D96AE', endColor='#61A9BD', GradientType=0 );  
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(25%, #3D96AE), color-stop(50%, #499CB3), color-stop(75%, #55A3B8), color-stop(100%, #61A9BD));
+	background-image: -webkit-linear-gradient(top, #3D96AE 25%, #499CB3 50%, #55A3B8 75%, #61A9BD 100%);
+	background-image: -moz-linear-gradient(top, #3D96AE 25%, #499CB3 50%, #55A3B8 75%, #61A9BD 100%);
+	background-image: -o-linear-gradient(top, #3D96AE 25%, #499CB3 50%, #55A3B8 75%, #61A9BD 100%);
+	background-image: -ms-linear-gradient(top, #3D96AE 25%, #499CB3 50%, #55A3B8 75%, #61A9BD 100%);
+	background-image: linear-gradient(top, #3D96AE 25%, #499CB3 50%, #55A3B8 75%, #61A9BD 100%);
+	-webkit-box-shadow: 0 0 2px #3D96AE inset, 0 1px 0 rgba(0,0,0,0.05);
+	-moz-box-shadow   : 0 0 2px #3D96AE inset, 0 1px 0 rgba(0,0,0,0.05);
+	box-shadow        : 0 0 2px #3D96AE inset, 0 1px 0 rgba(0,0,0,0.05);
+	color: #FFF;
+	border: 1px solid #3D96AE;
+}
