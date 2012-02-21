@@ -1,8 +1,49 @@
-var getState = function(){
+var before = $('select').val();
+var bool = false;
+
+var moveUniquesToEnd = function( one, two ){
+	for ( var i in two ){
+		var person = two[i];
+		var ind = one.indexOf( person );
+		if ( ind == -1 )
+			one.push( person );
+	}
+	return one;
+};
+
+var removePlayer = function( one, two ){
+	for ( var i in two ){
+		var person = two[i];
+		var ind = one.indexOf( person );
+		if ( ind == -1 )
+			two.splice( two.indexOf( person ), 1 );
+	}
+	return two;
+}
+
+var getState = function( bool, state ){
 	var obj = {};
-	obj.player_names = $('select').val();
+	if ( bool ){
+		obj.player_names = state;
+	} else {
+		obj.player_names = before;
+	}
 	return obj;
 }
+
+$('select').on('change',function(){
+	bool = true;	
+	var current = $('select').val();
+	if ( before.length > current.length ) {	
+		var after = removePlayer( current, before );
+		getState( bool, after );
+		before = after;
+	} else {
+		var after = moveUniquesToEnd( before, current );
+		getState( bool, after );
+		before = after;
+	}
+});
 
 var drawGraph = function(width,height){
 	if (typeof chart != 'undefined' ) chart.showLoading();
@@ -68,17 +109,6 @@ var drawGraph = function(width,height){
 			legend: {
 				enabled: false
 			},
-			//	itemStyle: {
-			//		fontFamily: 'Ubuntu',
-			//	},
-			//	borderColor: 'white',
-			//	borderRadius:0,
-			//	align: 'center',
-			//	verticalAlign: 'bottom',
-			//	floating: false,
-			//	margin: 30,
-			//	symbolWidth:50
-			//},
 			xAxis: {
 				lineColor: '#000000',
 				lineWidth: 2,
@@ -115,7 +145,7 @@ var resizeWidth = function(){
 var resizeHeight = function(){
 	$window.resize( function(){
 		var height = window.innerHeight;
-		var lessThan = height - 65;
+		var lessThan = height - 75;
 		$('#graph').css('height',lessThan);
 		return lessThan;
 	});
@@ -128,7 +158,4 @@ $(document).ready( function(){
 		drawGraph(resizeWidth(), resizeHeight());
 	});
 
-	$('.search-choice-close').click( function(){
-		console.log($(this).prev().text()); /* the one that was just closed */
-	});
 });
