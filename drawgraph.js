@@ -28,13 +28,16 @@ var getState = function( bool, state ){
 	} else {
 		obj.player_names = before;
 	}
+	obj.statistic = $('a.btn.dropdown-toggle span.current-stat').text();
 	return obj;
 }
 
 $('select').on('change',function(){
 	bool = true;	
 	var current = $('select').val();
-	if ( before.length > current.length ) {	
+	if ( !current ){
+		before = [];
+	} else if ( before.length > current.length ) {	
 		var after = removePlayer( current, before );
 		getState( bool, after );
 		before = after;
@@ -69,8 +72,8 @@ var drawGraph = function(width,height){
 					marker: {
 						enabled: false,
 						fillColor:'#FFFFFF',
-						lineWidth:4,
-						radius:4,
+						lineWidth:3,
+						radius:6,
 						lineColor:null,
 						states: {
 							hover: {
@@ -134,7 +137,9 @@ var drawGraph = function(width,height){
 	}, 'json' );
 };
 
-var $window = $(window);
+var $window = $(window),
+		navHeight = ($('div.navbar').outerHeight())*0.8,
+		wellHeight = ($('div.well').outerHeight())*0.8;
 
 var resizeWidth = function(){
 	$window.resize( function(){
@@ -144,14 +149,15 @@ var resizeWidth = function(){
 
 var resizeHeight = function(){
 	$window.resize( function(){
-		var height = window.innerHeight;
-		var lessThan = height - 75;
-		$('#graph').css('height',lessThan);
-		return lessThan;
+		var height = $window.innerHeight() - (navHeight + wellHeight);
+		$('#graph').css('height',height);
+		return height;
 	});
 };
 
 $(document).ready( function(){
+	$('#graph').css('height', $window.innerHeight() - (navHeight + wellHeight) );
+	
 	drawGraph(resizeWidth(), resizeHeight());
 
 	$('select').chosen().on('change',function(){
