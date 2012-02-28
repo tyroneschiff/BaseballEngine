@@ -1,8 +1,7 @@
 <? require 'batters.php'; ?>
 <html>
 	<head>
-		<!-- Chosen Styling -->
-		<link rel="stylesheet" href="chosen/chosen/chosen.css">
+		<!-- Input Styling -->
 		<link rel="stylesheet" href="selections.css">
 
 		<!-- Bootstrap Styling -->
@@ -25,34 +24,13 @@
 				font-size:24px;
 				letter-spacing:1px;
 			}
-			.dropdown-menu {
+			div.btn-group ul.dropdown-menu {
 				min-width:320px;
 				max-width:360px;
 			}
 			.dropdown-definition {
 				list-style-type:none;
 				color:#999;
-			}
-			@media (max-width: 980px) {
-				li form.form-inline {
-					margin-left:13px;
-				}
-				div[id$="_chzn"]{
-					width:560px !important;
-					margin-left:20px;
-					font-size:12px !important;
-				}
-				.chzn-container {
-					margin-left:20px;
-				}
-			}
-			@media (min-width: 980px) {
-				div[id$="_chzn"]{
-					width:auto !important;
-					margin-left:20px;
-					min-width:560px;
-					max-width:1126px;
-				}
 			}
 			ul.dropdown-menu li a.pro-stat span {
 				font-size:11px;
@@ -77,14 +55,34 @@
 				width:120px;
 			}
 			div.well {
-				padding:8px 0px;
+				padding:10px 0px 1px;
 			}
-			.chzn-container-multi .chzn-choices .search-field input {
-				height:25px;
+			div.stat-select-Batter, div.stat-select-Pitcher {
+				float:left;
+				margin-left:10px;
 			}
-			.chzn-container {
+			div.player-select {
+				float:left;
+				margin-left:10px;
+			}
+			div.position-select {
+				float:left;
+				margin-left:20px;
+			}
+			input.span2.player {
+				height:28px;
+				padding-top:4px;
 				font-size:14px;
 			}
+			@media (max-width: 980px) {
+				li form.form-inline {
+					margin-left:13px;
+				}
+				input.span2.player {
+					font-size:12px;
+				}
+			}
+
 		</style>
 		<title>The Baseball Engine</title>
 	</head>
@@ -118,7 +116,7 @@
 							</form>
 						</li>
 					</ul><!-- end nav pull-right -->
-				</div>
+				</div><!-- end nav-collapse -->
 			</div><!-- End container -->
 		</div><!-- End navbar-inner -->
 	</div><!-- End navbar -->
@@ -126,7 +124,13 @@
 	<!-- Begin well -->
 	<div class="well">
 		<div class="row-fluid">
-			<div style="float:left;margin-left:20px;">
+			<div class="position-select">
+				<div class="btn-group" data-toggle="buttons-radio">
+					<button class="btn active" data-pos="Batter">Batters</button>
+					<button class="btn" data-pos="Pitcher">Pitchers</button>
+				</div>
+			</div><!-- end position-select -->
+			<div class="stat-select-Batter">
 				<div class="btn-group">
 					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
 						<span class="current-stat">BE Score</span>
@@ -154,16 +158,43 @@
 						</li>
 					</ul><!-- end dropdown-menu -->
 				</div><!-- end btn-group -->
-			</div><!-- end -->
-			<div style="float:left;">
-				<select data-placeholder="Select your batters..." class="chzn-select span9" multiple>
-					<? foreach ( $batters as $id => $player_name ): ?>
-					<option <? if ( in_array( $player_name, $topBEscores ) ){ echo "selected=selected"; } ?>><?= $player_name; ?></option>          
-					<? endforeach; ?>
-				</select>
-			</div><!-- end -->
+			</div><!-- end stat-select-batter -->
+			<div class="stat-select-Pitcher" style="display:none;">
+				<div class="btn-group">
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+						<span class="current-stat">BE Score</span>
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="#">BE Score</a>
+							<ul class="dropdown-definition">
+								<li>
+									The Baseball Engine's method for ranking players
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="#">Earned Run Average</a>
+							<ul class="dropdown-definition">
+								<li>
+									Divide the number of earned runs allowed by the number of innings pitched and multiply by nine
+								</li>
+							</ul>
+						<li class="divider"></li>
+						<li>
+							<a href="#" class="pro-stat">Strikeout Ratio <span>Available in Pro</span></a>
+						</li>
+					</ul><!-- end dropdown-menu -->
+				</div><!-- end btn-group -->
+			</div><!-- end stat-select-pitcher -->
+			<div class="player-select">
+				<? foreach ( $topBEscores as $key => $batters ): ?> 
+				<input type="text" class="span2 player" data-provide="typeahead" data-items="18" value="<?= $batters; ?>">
+				<? endforeach; ?>
+			</div><!-- player-select end -->
 		</div><!-- end row-fluid -->
-	</div>
+	</div><!-- end well -->
 
 	<!-- Begin container-fluid -->
 	<div class="container-fluid">
@@ -175,15 +206,9 @@
 <script type="text/javascript" src="bootstrap/docs/assets/js/bootstrap-collapse.js"></script>
 <script type="text/javascript" src="bootstrap/docs/assets/js/bootstrap-typeahead.js"></script>
 <script type="text/javascript" src="bootstrap/docs/assets/js/bootstrap-dropdown.js"></script>
-<script type="text/javascript" src="bootstrap/docs/assets/js/bootstrap-modal.js"></script>
+<script type="text/javascript" src="bootstrap/docs/assets/js/bootstrap-button.js"></script>
 <script type="text/javascript" src="highcharts/js/highcharts.src.js"></script>
 <script type="text/javascript" src="drawgraph.js"></script>
 <script type="text/javascript" src="changestat.js"></script>
-<script type="text/javascript" src="functional.js"></script>
-<script type="text/javascript" src="chosen/chosen/chosen.jquery.js"></script>
-<script>
-	$(".chzn-select").chosen();
-	$(".chzn-select-deselect").chosen({allow_single_deselect:true}); 
-</script>
 </body>
 </html>

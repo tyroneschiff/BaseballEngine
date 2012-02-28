@@ -7,6 +7,7 @@ $(document).ready( function(){
 		drawGraph();
 	});
 
+	/*
 	$('a.btn.dropdown-toggle').on('mouseover',function(){
 		dropdown.addClass('open');
 	});
@@ -14,4 +15,5 @@ $(document).ready( function(){
 	$('ul.dropdown-menu').on('mouseleave',function(){
 		dropdown.removeClass('open');
 	});
+	*/
 });

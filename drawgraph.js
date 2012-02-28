@@ -1,52 +1,26 @@
-var before = $('select').val();
-var bool = false;
+var $window = $(window),
+		navHeight = $('div.navbar').outerHeight(),
+		wellHeight = $('div.well').outerHeight(),
+		playerInput = $('input.span2.player');
 
-var moveUniquesToEnd = function( one, two ){
-	for ( var i in two ){
-		var person = two[i];
-		var ind = one.indexOf( person );
-		if ( ind == -1 )
-			one.push( person );
-	}
-	return one;
-};
-
-var removePlayer = function( one, two ){
-	for ( var i in two ){
-		var person = two[i];
-		var ind = one.indexOf( person );
-		if ( ind == -1 )
-			two.splice( two.indexOf( person ), 1 );
-	}
-	return two;
+var getPlayers = function( file ){
+	$.post( file+".php", function(resp){
+		playerInput.attr('data-source', resp );
+	});
 }
 
-var getState = function( bool, state ){
+var getState = function(){
 	var obj = {};
-	if ( bool ){
-		obj.player_names = state;
-	} else {
-		obj.player_names = before;
-	}
-	obj.statistic = $('a.btn.dropdown-toggle span.current-stat').text();
+	obj.player_names = [];
+	playerInput.each( function(i,inp){
+		var val = $(inp).val();
+		if ( val.length > 0  )
+			obj.player_names.push( val );
+	});
+	obj.statistic = $('a.btn.dropdown-toggle span.current-stat:visible').text();
+	obj.type = $('div.btn-group button.btn.active').data('pos');
 	return obj;
 }
-
-$('select').on('change',function(){
-	bool = true;	
-	var current = $('select').val();
-	if ( !current ){
-		before = [];
-	} else if ( before.length > current.length ) {	
-		var after = removePlayer( current, before );
-		getState( bool, after );
-		before = after;
-	} else {
-		var after = moveUniquesToEnd( before, current );
-		getState( bool, after );
-		before = after;
-	}
-});
 
 var drawGraph = function(width,height){
 	if (typeof chart != 'undefined' ) chart.showLoading();
@@ -137,10 +111,6 @@ var drawGraph = function(width,height){
 	}, 'json' );
 };
 
-var $window = $(window),
-		navHeight = ($('div.navbar').outerHeight())*0.8,
-		wellHeight = ($('div.well').outerHeight())*0.8;
-
 var resizeWidth = function(){
 	$window.resize( function(){
 		return $('.container-fluid').width();
@@ -149,19 +119,60 @@ var resizeWidth = function(){
 
 var resizeHeight = function(){
 	$window.resize( function(){
-		var height = $window.innerHeight() - (navHeight + wellHeight);
+		var height = ($window.innerHeight()*0.95) - (navHeight + wellHeight);
 		$('#graph').css('height',height);
 		return height;
 	});
 };
 
+var clickPlayer = function(){
+	playerInput.on('change',function(){
+		var ind = $(this).index(),
+			indString = ind.toString(),
+			typeaheadUl = $("ul.typeahead.dropdown-menu").not('[id]').attr('id',indString),
+			player = $("#"+indString).find('li.active').data('value');
+		$("div.player-select input:eq("+ind+")").val( player );
+		drawGraph();
+	});
+};
+
+var enterPlayer = function(){
+	playerInput.on('keyup',function(e){
+		if ( e.keyCode == 13 ) {
+			var ind = $(this).index(),
+				indString = ind.toString(),
+				typeaheadUl = $("ul.typeahead.dropdown-menu").not('[id]').attr('id',indString),
+				player = $("#"+indString).find('li.active').data('value');
+			$("div.player-select input:eq("+ind+")").val( player );
+			drawGraph();
+		}
+	});
+};
+
 $(document).ready( function(){
-	$('#graph').css('height', $window.innerHeight() - (navHeight + wellHeight) );
-	
+	getPlayers( "Batter" );
+
+	$('#graph').css('height', ($window.innerHeight()*0.95) - (navHeight + wellHeight) );
 	drawGraph(resizeWidth(), resizeHeight());
 
-	$('select').chosen().on('change',function(){
-		drawGraph(resizeWidth(), resizeHeight());
+	clickPlayer();
+	enterPlayer();
+
+	$('input').on('click',function(){
+		$(this).select();
+	});
+
+	$('div.btn-group button.btn').on('click', function(){
+		var positionType = $(this).data('pos'),
+				otherPosition = $(this).siblings().data('pos'),
+				playerInput = $('input.span2.player'),
+				currentStat = $('ul.dropdown-menu li a:first').text();
+		playerInput.val('');
+		$(".stat-select-"+positionType).show();
+		$(".stat-select-"+otherPosition).hide();
+		$('.current-stat').text( currentStat );
+		getPlayers( positionType );
+		drawGraph();
 	});
 
 });

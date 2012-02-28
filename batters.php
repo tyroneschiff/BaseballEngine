@@ -3,6 +3,6 @@
 	include 'functions.php';
 
 	$batters = getBEScoreBatters();
-	$topBEscores = getTopTwoBEScoreBatters();
+	$topBEscores = getTopThreeBEScoreBatters();
 
 ?>

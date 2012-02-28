@@ -1,10 +1,13 @@
 <?
 	require 'connect.php';
 	require 'functions.php';
-	
-	$statistic_id = 63;
+
+
+	$statistic = $_POST['statistic'];
 	$player_names = $_POST['player_names'];
-	
+	$type = $_POST['type'];
+	$statistic_id = getStatisticIdFromStatistic( $statistic, $type );
+
 	$config = (object) null;
 	$config->series = array();
 	$config->xAxis = (object) null;
