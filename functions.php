@@ -1,5 +1,4 @@
 <?
-
 	function getPlayers(){
 		$sql = "SELECT name, position, team, id FROM players";
 		$res = mysql_query( $sql );
@@ -55,35 +54,19 @@
 		return sprintf( '%s ( %s %s )', $arr['name'], $arr['position'], $arr['team'] );
 	}
 
-	function getBEScoreBatters(){
+	function getPlayersBasedOnStatistic( $statistic_id ){
 		$lastDay = getLastDate();
-		$sql = sprintf( "SELECT player_id FROM data WHERE statistic_id = 63 AND day = '%s'", $lastDay );
-		$res = mysql_query( $sql );
-		$ids = array();
-		while ( $arr = mysql_fetch_array( $res ) ){
-			$ids[] = $arr['player_id'];
-		}
-		$player_names = array();
-		foreach ( $ids as $key => $player_id ){
-			$player_names[] = getPlayerDetailsFromId( $player_id );
-		}
-		return $player_names;
-	}
-
-	function getBEScorePitchers(){
-		$lastDay = getLastDate();
-		$sql = sprintf( "SELECT player_id FROM data WHERE statistic_id = 65 AND day = '%s'", $lastDay );
-		$res = mysql_query( $sql );
-		$ids = array();
-		while ( $arr = mysql_fetch_array( $res ) ){
-			$ids[] = $arr['player_id'];
-		}
-		$player_names = array();
-		foreach( $ids as $key => $player_id ){
-			$player_names[] = getPlayerDetailsFromId( $player_id );
-		}
-		return $player_names;
-	}
+    $sql = sprintf( "SELECT player_id FROM data WHERE statistic_id = '%d' AND day = '%s'", $statistic_id, $lastDay );
+    $res = mysql_query( $sql );
+    $ids = array();
+    while ( $arr = mysql_fetch_array( $res ) ){
+      $ids[] = $arr['player_id'];    }
+    $player_names = array();
+    foreach ( $ids as $key => $player_id ){
+      $player_names[] = getPlayerDetailsFromId( $player_id );
+    }
+    return $player_names;
+  }
 
 	function arrayMerge( array $array ){
 		$flatten = array();
@@ -97,24 +80,9 @@
 		return !is_null( $nulls );
 	}
 
-	function getTopThreeBEScoreBatters(){
+	function getTopThree( $statistic_id ){
 		$lastDay = getLastDate();
-		$sql = sprintf( "SELECT player_id, value FROM data WHERE statistic_id = 63 AND day = '%s' ORDER BY value DESC LIMIT 3", $lastDay );
-		$res = mysql_query( $sql );
-		$ids = array();
-		while ( $arr = mysql_fetch_array( $res ) ){
-			$ids[] = $arr['player_id'];
-		}
-		$player_names = array();
-		foreach ( $ids as $key => $player_id ){
-			$player_names[] = getPlayerDetailsFromId( $player_id );
-		}
-		return $player_names;
-	}
-
-	function getTopThreeBEScorePitchers(){
-		$lastDay = getLastDate();
-		$sql = sprintf( "SELECT player_id, value FROM data WHERE statistic_id = 65 AND day = '%s' ORDER BY value DESC LIMIT 3", $lastDay );
+		$sql = sprintf( "SELECT player_id, value FROM data WHERE statistic_id = '%s' AND day = '%s' ORDER BY value DESC LIMIT 3", $statistic_id, $lastDay );
 		$res = mysql_query( $sql );
 		$ids = array();
 		while ( $arr = mysql_fetch_array( $res ) ){
