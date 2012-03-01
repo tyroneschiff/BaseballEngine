@@ -3,9 +3,20 @@ var $window = $(window),
 		wellHeight = $('div.well').outerHeight(),
 		playerInput = $('input.span2.player');
 
-var getPlayers = function( file ){
-	$.post( file+".php", function(resp){
-		playerInput.attr('data-source', resp );
+var getPlayers = function(statistic, type){
+	$.getJSON( "array.php", {statistic:statistic,type:type}, function(resp){
+		playerInput.each( function(){
+			$(this).typeahead().data('typeahead').source = resp;
+		});
+	});
+}
+
+var getTopThree = function(statistic, type){
+	$.getJSON( "top.php", {statistic:statistic,type:type}, function(resp){
+			playerInput.each( function(i){
+				$(this).val( resp[i] );
+			});
+			drawGraph();
 	});
 }
 
@@ -113,7 +124,9 @@ var drawGraph = function(width,height){
 
 var resizeWidth = function(){
 	$window.resize( function(){
-		return $('.container-fluid').width();
+		var windowWidth = $(this).width(),
+				els = $('#graph, div.row-fluid');
+		( windowWidth < 960 ) ? els.css('width',windowWidth-20) : els.css('width','960');
 	});
 };
 
@@ -129,7 +142,7 @@ var clickPlayer = function(){
 	playerInput.on('change',function(){
 		var ind = $(this).index(),
 			indString = ind.toString(),
-			typeaheadUl = $("ul.typeahead.dropdown-menu").not('[id]').attr('id',indString),
+			typeaheadUl = $("ul.typeahead.dropdown-menu:eq("+ind+")").not('[id]').attr('id',indString),
 			player = $("#"+indString).find('li.active').data('value');
 		$("div.player-select input:eq("+ind+")").val( player );
 		drawGraph();
@@ -141,7 +154,7 @@ var enterPlayer = function(){
 		if ( e.keyCode == 13 ) {
 			var ind = $(this).index(),
 				indString = ind.toString(),
-				typeaheadUl = $("ul.typeahead.dropdown-menu").not('[id]').attr('id',indString),
+				typeaheadUl = $("ul.typeahead.dropdown-menu:eq("+ind+")").not('[id]').attr('id',indString),
 				player = $("#"+indString).find('li.active').data('value');
 			$("div.player-select input:eq("+ind+")").val( player );
 			drawGraph();
@@ -150,10 +163,14 @@ var enterPlayer = function(){
 };
 
 $(document).ready( function(){
-	getPlayers( "Batter" );
+	getPlayers("BE Score", "Batter");
+	getTopThree("BE Score", "Batter");
 
-	$('#graph').css('height', ($window.innerHeight()*0.95) - (navHeight + wellHeight) );
-	drawGraph(resizeWidth(), resizeHeight());
+	drawGraph(resizeHeight(), resizeWidth());
+
+	$('#graph').css({
+		'height':($window.innerHeight()*0.95) - (navHeight + wellHeight),
+	});
 
 	clickPlayer();
 	enterPlayer();
@@ -161,18 +178,18 @@ $(document).ready( function(){
 	$('input').on('click',function(){
 		$(this).select();
 	});
-
+	
 	$('div.btn-group button.btn').on('click', function(){
-		var positionType = $(this).data('pos'),
-				otherPosition = $(this).siblings().data('pos'),
+		var type = $(this).data('pos'),
+				typeSibling = $(this).siblings().data('pos'),
 				playerInput = $('input.span2.player'),
-				currentStat = $('ul.dropdown-menu li a:first').text();
+				statistic = $('ul.dropdown-menu li a:first').text();
 		playerInput.val('');
-		$(".stat-select-"+positionType).show();
-		$(".stat-select-"+otherPosition).hide();
-		$('.current-stat').text( currentStat );
-		getPlayers( positionType );
-		drawGraph();
+		$(".stat-select-"+type).show();
+		$(".stat-select-"+typeSibling).hide();
+		$('.current-stat').text( statistic );
+		getPlayers( statistic, type );
+		getTopThree( statistic, type );
 	});
 
 });
