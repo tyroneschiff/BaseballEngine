@@ -1,4 +1,3 @@
-<? require 'batters.php'; ?>
 <html>
 	<head>
 		<!-- Input Styling -->
@@ -15,6 +14,10 @@
 			body {
 				padding-top:0px;
 				font-family: 'Ubuntu', sans-serif;
+			}
+			#graph {
+				width:960px;
+				margin:auto;
 			}
 			.navbar {
 				margin-bottom:1px;
@@ -55,24 +58,36 @@
 				width:120px;
 			}
 			div.well {
-				padding:10px 0px 1px;
+				padding:14px 0px 0px 0px;
+			}
+			div.well div.row-fluid {
+				width:960px;
+				margin:auto;
 			}
 			div.stat-select-Batter, div.stat-select-Pitcher {
-				float:left;
 				margin-left:10px;
+				text-align:left;
+				display:inline-block;
+			}
+			span.current-stat {
+				font-size:14px;
 			}
 			div.player-select {
-				float:left;
 				margin-left:10px;
+				display:inline-block;
+				position:relative;
+				top:-7px;
 			}
 			div.position-select {
-				float:left;
-				margin-left:20px;
+				min-width:132px;
+				display:inline-block;
+				float:right;
 			}
 			input.span2.player {
 				height:28px;
-				padding-top:4px;
+				padding-top:5px;
 				font-size:14px;
+				display:inline-block;
 			}
 			@media (max-width: 980px) {
 				li form.form-inline {
@@ -81,8 +96,13 @@
 				input.span2.player {
 					font-size:12px;
 				}
+				span.current-stat {
+					font-size:12px;
+				}
+				div.position-select div.btn-group button {
+					font-size:11px;
+				}
 			}
-
 		</style>
 		<title>The Baseball Engine</title>
 	</head>
@@ -124,12 +144,6 @@
 	<!-- Begin well -->
 	<div class="well">
 		<div class="row-fluid">
-			<div class="position-select">
-				<div class="btn-group" data-toggle="buttons-radio">
-					<button class="btn active" data-pos="Batter">Batters</button>
-					<button class="btn" data-pos="Pitcher">Pitchers</button>
-				</div>
-			</div><!-- end position-select -->
 			<div class="stat-select-Batter">
 				<div class="btn-group">
 					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
@@ -175,7 +189,7 @@
 							</ul>
 						</li>
 						<li>
-							<a href="#">Earned Run Average</a>
+							<a href="#">ERA</a>
 							<ul class="dropdown-definition">
 								<li>
 									Divide the number of earned runs allowed by the number of innings pitched and multiply by nine
@@ -189,10 +203,17 @@
 				</div><!-- end btn-group -->
 			</div><!-- end stat-select-pitcher -->
 			<div class="player-select">
-				<? foreach ( $topBEscores as $key => $batters ): ?> 
-				<input type="text" class="span2 player" data-provide="typeahead" data-items="18" value="<?= $batters; ?>">
-				<? endforeach; ?>
+				<input type="text" class="span2 player" data-provide="typeahead">
+				<input type="text" class="span2 player" data-provide="typeahead">
+				<input type="text" class="span2 player" data-provide="typeahead">
+				<input type="text" class="span2 player" data-provide="typeahead">
 			</div><!-- player-select end -->
+			<div class="position-select">
+				<div class="btn-group" data-toggle="buttons-radio">
+					<button class="btn active" data-pos="Batter">Batters</button>
+					<button class="btn" data-pos="Pitcher">Pitchers</button>
+				</div>
+			</div><!-- end position-select -->
 		</div><!-- end row-fluid -->
 	</div><!-- end well -->
 
@@ -207,7 +228,7 @@
 <script type="text/javascript" src="bootstrap/docs/assets/js/bootstrap-typeahead.js"></script>
 <script type="text/javascript" src="bootstrap/docs/assets/js/bootstrap-dropdown.js"></script>
 <script type="text/javascript" src="bootstrap/docs/assets/js/bootstrap-button.js"></script>
-<script type="text/javascript" src="highcharts/js/highcharts.src.js"></script>
+<script type="text/javascript" src="highcharts/js/highcharts.min.js"></script>
 <script type="text/javascript" src="drawgraph.js"></script>
 <script type="text/javascript" src="changestat.js"></script>
 </body>
