@@ -45,7 +45,7 @@ input.span2.player:nth-child(3) {
 	border: 1px solid #89A54E;
 }
 
-.chzn-container-multi .chzn-choices li:nth-child(4):not(.search-field) {
+input.span2.player:nth-child(4) {
 	background-color:#FFFFFF;
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#80699B', endColor='#9785AD', GradientType=0 );
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(25%, #80699B), color-stop(50%, #8772A1), color-stop(75%, #8F7BA7), color-stop(100%, #9785AD));
