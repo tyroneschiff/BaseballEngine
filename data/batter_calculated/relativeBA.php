@@ -33,6 +33,7 @@ foreach ( $aPlayer as $iPlayer => $name ) {
 		$RBA = (($Hits / $AB) / (( $avgHits - $Hits ) / ( $avgABs - $AB ))); // RBA
 		storeValue( $iPlayer, $new_stat , $RBA );
 	} catch ( Exception $e ) {
+		echo 'Caught exception: ',  $e->getMessage(), "\n";
 	}
 }
 

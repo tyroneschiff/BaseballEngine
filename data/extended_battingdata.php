@@ -4,7 +4,7 @@
 include '/home/tyrone/baseballengine1.2/connect.php';
 include '/home/tyrone/baseballengine1.2/functions.php';
 
-  $page = file_get_contents( 'http://www.cbssports.com/mlb/stats/playersort/MLB/AVGXU/ALL/regularseason/2011?&print_rows=9999&_3:col_1=1&_3:col_2=4' );
+  $page = file_get_contents( 'http://www.cbssports.com/mlb/stats/playersort/MLB/AVGXU/ALL/preseason/2012?&_3:col_1=1&_3:col_2=4' );
 
   // Parse CBS data 
 
@@ -63,7 +63,6 @@ foreach ( $cbs[0] as $i => $null ) {
 	foreach ( $stats as $statistic_id => $array_value ) {
 		$value = $cbs[ $array_value ][ $i ];
 		$sql = sprintf( "INSERT INTO data SET statistic_id = '%d', player_id = '%d', value = '%s', day = NOW()-INTERVAL 1 day", $statistic_id,  $player_id,  $value );
-		echo "$sql <br/> ";
 		mysql_query( $sql );
 		echo "\n\n".mysql_error()."\n\n";
 	}

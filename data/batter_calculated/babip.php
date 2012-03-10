@@ -42,6 +42,7 @@ foreach ( $aPlayer as $iPlayer => $name ) {
 		$BABIP = ($Hits - $HR)/($AB - $SO - $HR + $SF);
 		storeValue( $iPlayer, $new_stat , $BABIP );
 	} catch ( Exception $e ) {
+		echo 'Caught exception: ',  $e->getMessage(), "\n";
 	}
 }
 

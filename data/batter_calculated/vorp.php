@@ -54,6 +54,7 @@ foreach ( $aPlayer as $iPlayer => $name ) {
 		$Vorp = $RC - ( $RunsperLeagueOuts * $PlayerOuts )*0.8; // Vorp
 		storeValue( $iPlayer, $new_stat , $Vorp );
 	} catch ( Exception $e ) {
+		echo 'Caught exception: ',  $e->getMessage(), "\n";
 	}
 }
 

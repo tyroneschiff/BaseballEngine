@@ -24,6 +24,7 @@ foreach ( $aPlayer as $iPlayer => $name ) {
 		$PR = ( $avgERA - $ERA ) * ( $IP / 9 ); // PR
 		storeValue( $iPlayer, $new_stat , $PR );
 	} catch ( Exception $e ) {
+		echo 'Caught exception: ',  $e->getMessage(), "\n";
 	}
 }
 

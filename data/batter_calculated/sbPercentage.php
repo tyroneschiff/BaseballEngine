@@ -24,6 +24,7 @@ foreach ( $aPlayer as $iPlayer => $name ) {
 		$SBpercent = (( $SB / ( $SB + $CS )) * 100 ); // SB Percent
 		storeValue( $iPlayer, $new_stat , $SBpercent );
 	} catch ( Exception $e ) {
+		echo 'Caught exception: ',  $e->getMessage(), "\n";
 	}
 }
 

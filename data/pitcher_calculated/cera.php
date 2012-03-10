@@ -37,6 +37,7 @@ foreach ( $aPlayer as $iPlayer => $name ) {
 		$ERC = ((( $Hits + $BB )*$PTB)/( $TBF * $IP ))*9 - 0.56; // ERC
 		storeValue( $iPlayer, $new_stat , $ERC );
 	} catch ( Exception $e ) {
+		echo 'Caught exception: ',  $e->getMessage(), "\n";
 	}
 }
 

@@ -22,6 +22,7 @@ foreach ( $aPlayer as $iPlayer => $name ) {
 		$GPA = ((1.8*$OBP) + $SLG ) / 4; // GPA
 		storeValue( $iPlayer, $new_stat , $GPA );
 	} catch ( Exception $e ) {
+		echo 'Caught exception: ',  $e->getMessage(), "\n";
 	}
 }
 

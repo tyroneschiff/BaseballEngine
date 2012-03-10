@@ -72,6 +72,7 @@ foreach ( $aPlayer as $iPlayer => $name ) {
 		$RC = ($Hits + $BB - $CS + $HBP - $GIDP)*($TB + (0.26*($BB - $IBB + $HBP)) + (0.52*( $SH + $SF + $SB ))) / ( $AB + $BB + $HBP + $SH + $SF );
 		storeValue( $iPlayer, $new_stat , $RC );
 	} catch ( Exception $e ) {
+		echo 'Caught exception: ',  $e->getMessage(), "\n";
 	}
 }
 

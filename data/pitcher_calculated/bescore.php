@@ -72,6 +72,7 @@ foreach ( $aPlayer as $iPlayer => $name ) {
 		$BE = ((1/6)*(($Wins - $avgWins)/$stdWins) + (1/6)*(($KO - $avgKO)/$stdKO) + (1/12)*(($Saves - $avgSaves)/$stdSaves) - (1/12)*(($MB9 - $avgMB9)/$stdMB9) - (1/6)*(($ERA - $avgERA)/$stdERA) - (1/6)*(($WHIP - $avgWHIP)/$stdWHIP) - (1/6)*(($BAA - $avgBAA)/$stdBAA));
 		storeValue( $iPlayer, $new_stat , $BE );
 	} catch ( Exception $e ) {
+		echo 'Caught exception: ',  $e->getMessage(), "\n";
 	}
 }
 

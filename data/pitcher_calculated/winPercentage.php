@@ -4,30 +4,25 @@ ini_set( 'display_errors', 'on' );
 include '/home/tyrone/baseballengine1.2/connect.php';
 include '/home/tyrone/baseballengine1.2/functions.php';
 
-$stat1 = 108; // Hits
-$stat2 = 122; // TBF
-$stat3 = 113; // Walks
-$new_stat = 134;
+$stat1 = 104; // Wins
+$stat2 = 105; // Losses
+$new_stat = 140;
 
 $aPlayer = getListOfPlayers();
 
 foreach ( $aPlayer as $iPlayer => $name ) {
   try {
-		$Hits = getValue( $iPlayer, $stat1 ); // Hits
-		if ( $Hits === false )
+		$Wins = getValue( $iPlayer, $stat1 ); // KO  
+		if ( $Wins === false )
 			throw new Exception( "Can't find stat #".$stat1 );
-		$TBF = getValue( $iPlayer, $stat2 );
-		if ( $TBF === false )
+		$Losses = getValue( $iPlayer, $stat2 );
+		if ( $Losses === false )
 			throw new Exception( "Can't find stat #".$stat2 );
-		$BB = getValue( $iPlayer, $stat3 );
-		if ( $BB === false )
-			throw new Exception( "Can't find stat #".$stat3 );
-
-		if ( ($TBF - $BB) == 0 )
+		if ( ($Wins + $Losses) == 0 )
 			throw new Exception( "Can't divide by zero <br/ >" );
 			
-		$BAA = $Hits / ( $TBF - $BB ); // At Bats per ...
-		storeValue( $iPlayer, $new_stat , $BAA );
+		$WinP = $Wins / ($Wins + $Losses); 
+		storeValue( $iPlayer, $new_stat , $WinP );
 	} catch ( Exception $e ) {
 		echo 'Caught exception: ',  $e->getMessage(), "\n";
 	}

@@ -28,6 +28,7 @@ foreach ( $aPlayer as $iPlayer => $name ) {
 		$Ratio = ( $KO + $BB ) / $IP; // pfRatio
 		storeValue( $iPlayer, $new_stat , $Ratio );
 	} catch ( Exception $e ) {
+		echo 'Caught exception: ',  $e->getMessage(), "\n";
 	}
 }
 

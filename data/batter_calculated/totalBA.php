@@ -46,6 +46,7 @@ foreach ( $aPlayer as $iPlayer => $name ) {
 		$TBA = (($TB + $SB + $BB - $CS) / ($AB - $Hits + $CS + $GIDP)); // TBA
 		storeValue( $iPlayer, $new_stat , $TBA );
 	} catch ( Exception $e ) {
+		echo 'Caught exception: ',  $e->getMessage(), "\n";
 	}
 }
 

@@ -36,6 +36,7 @@ foreach ( $aPlayer as $iPlayer => $name ) {
 		$ISO = ($Doubles + ( $Triples*2 ) + ( $HR*3 )) / $AB; // ISO
 		storeValue( $iPlayer, $new_stat , $ISO );
 	} catch ( Exception $e ) {
+		echo 'Caught exception: ',  $e->getMessage(), "\n";
 	}
 }
 

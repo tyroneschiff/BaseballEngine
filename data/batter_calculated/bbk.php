@@ -24,6 +24,7 @@ foreach ( $aPlayer as $iPlayer => $name ) {
 		$BBK = $BB / $K; 
 		storeValue( $iPlayer, $new_stat , $BBK );
 	} catch ( Exception $e ) {
+		echo 'Caught exception: ',  $e->getMessage(), "\n";
 	}
 }
 

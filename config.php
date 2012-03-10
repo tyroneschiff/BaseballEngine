@@ -2,7 +2,6 @@
 	require 'connect.php';
 	require 'functions.php';
 
-
 	$statistic = $_POST['statistic'];
 	$player_names = $_POST['player_names'];
 	$type = $_POST['type'];
@@ -13,12 +12,14 @@
 	$config->xAxis = (object) null;
 	$config->yAxis = (object) null;
 
-	if ( $player_names != "null" ){
+	if ( $player_names !== "null" ){
 		$players = getPlayers();
 		foreach ( $player_names as $i => $player ) {
-			$player_id = array_search( $player, $players );
-			if ( ! $player_id )
+			$player_id = array_search( trim( $player ), $players );
+			if ( ! $player_id || $player == "null" ){
+				$config->series[$i] = (object) null;
 				continue;
+			}
 			$config->series[$i] = (object) null;
 			$config->series[$i]->name = preg_replace( '#\([^\)]+\)$#', null, $player );
 			$data = getPaddedData( $statistic_id, $player_id );
@@ -45,8 +46,8 @@
 		// Store the minimum
 		$minimum = min($values);
 	
-		$config->yAxis->max = $maximum;
-		$config->yAxis->min = $minimum;
+		//$config->yAxis->max = $maximum;
+		$config->yAxis->min = ( $minimum > 0 ) ? 0 : $minimum;
 	
 		$count = count($arr[0]);
 		$config->xAxis->tickInterval = ceil($count/10);
