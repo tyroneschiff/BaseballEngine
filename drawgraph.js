@@ -27,7 +27,8 @@ var getTopThree = function(statistic, type){
 			playerInput.each( function(i){
 				$(this).val( players[i] );
 			});
-			drawGraph();
+			drawGraph(resizeHeight(), resizeWidth());
+			lineReg();
 	});
 }
 
@@ -46,55 +47,13 @@ var getState = function(){
 	return obj;
 }
 
-var linearRegression = function(y,x){
-	var lr = {},
-	n = y.length,
-	sum_x = 0,
-	sum_y = 0,
-	sum_xy = 0,
-	sum_xx = 0,
-	sum_yy = 0,
-	denominator = Math.sqrt((n*sum_xx-sum_x*sum_x)*(n*sum_yy-sum_y*sum_y));
-
-	for (var i = 0; i < y.length; i++) {
-		sum_x += x[i];
-		sum_y += y[i];
-		sum_xy += (x[i]*y[i]);
-		sum_xx += (x[i]*x[i]);
-		sum_yy += (y[i]*y[i]);
-	}
-
-	lr['slope'] = (n * sum_xy - sum_x * sum_y) / (n*sum_xx - sum_x * sum_x);
-	lr['intercept'] = (sum_y - lr.slope * sum_x)/n;
-	( denominator == 0 ) ? lr['r2'] = 100 : lr['r2'] = Math.pow((n*sum_xy - sum_x*sum_y)/denominator,2);
-
-	return lr;
+var lineReg = function(){
+	$.post("/reg.php", getState(), function(){} );
 }
-
-var isEmpty = function(obj) {
-	var p;
-	for (p in obj) {
-		if (obj.hasOwnProperty(p)) {
-			return false;
-		}
-	}
-	return true;
-};
 
 var drawGraph = function(width,height){
 	if (typeof chart != 'undefined' ) chart.showLoading();
 	$.post( '/config.php', getState(), function(resp){
-		var known_x = [], known_y, lr;
-		for ( i=1; i<=resp.series.length; i++){
-			known_x.push(i);
-		}
-		for ( i=0; i<=resp.series.length; i++){
-			if ( isEmpty(resp.series[i]) ){
-				continue;
-			}
-			known_y = resp.series[i].data;
-			lr = linearRegression( known_y, known_x );
-		}
 		var config = $.extend( true, resp, {
 			chart: {
 				renderTo: 'graph',
@@ -156,6 +115,12 @@ var drawGraph = function(width,height){
 			legend: {
 				enabled: false
 			},
+			subtitle: {
+				text: '',
+				floating:true,
+				y:25,
+				x:-($('#graph').width()/2-100)
+			},
 			xAxis: {
 				lineColor: '#000000',
 				lineWidth: 2,
@@ -195,7 +160,7 @@ var drawGraph = function(width,height){
 var resizeWidth = function(){
 	$window.resize( function(){
 		var windowWidth = $(this).width(),
-				els = $('#graph, div.row-fluid');
+				els = $('#graph, div.row-fluid, div.navbar-inner div.container, div.container-fluid.gray');
 		( windowWidth <= 960 ) ? els.css('width',windowWidth-20) : els.css('width','960px');
 		if ( windowWidth >= 1440 )
 			els.css('width',(windowWidth*(2/3)));
@@ -204,9 +169,9 @@ var resizeWidth = function(){
 
 var resizeHeight = function(){
 	$window.resize( function(){
-		var height = ($window.innerHeight()*0.95) - (navHeight + wellHeight);
+		//var height = ($window.innerHeight()*0.90) - (navHeight + wellHeight);
+		var height = 550;
 		$('#graph').css('height',height);
-		console.log(height);
 		return height;
 	});
 };
@@ -218,7 +183,7 @@ var clickPlayer = function(){
 			typeaheadUl = $("ul.typeahead.dropdown-menu:eq("+ind+")").not('[id]').attr('id',indString),
 			player = $("#"+indString).find('li.active').data('value');
 		$("div.player-select input:eq("+ind+")").val( player );
-		drawGraph();
+		drawGraph(resizeHeight(), resizeWidth());
 	});
 };
 
@@ -230,7 +195,7 @@ var enterPlayer = function(){
 				typeaheadUl = $("ul.typeahead.dropdown-menu:eq("+ind+")").not('[id]').attr('id',indString),
 				player = $("#"+indString).find('li.active').data('value');
 			$("div.player-select input:eq("+ind+")").val( player );
-			drawGraph();
+			drawGraph(resizeHeight(), resizeWidth());
 		}
 	});
 };
@@ -238,13 +203,14 @@ var enterPlayer = function(){
 window.onload = function(){ window.scrollTo(0,0); }
 
 $(document).ready( function(){
-	drawGraph(resizeHeight(), resizeWidth());
+	//drawGraph(resizeHeight(), resizeWidth());
 	
 	getPlayers("BE Score", "Batter");
 	getTopThree("BE Score", "Batter");
 
 	$('#graph').css({
-		'height':($window.innerHeight()*0.95) - (navHeight + wellHeight),
+		//'height':($window.innerHeight()*0.90) - (navHeight + wellHeight),
+		'height':550,
 		'width' : function(){
 			if ( $window.width() >= 1440 ) return ($window.width()*(2/3)-20);
 			else  if ( $window.width() <= 960 ) return $window.width()-20;
@@ -252,14 +218,19 @@ $(document).ready( function(){
 		}
 	});
 
-	$('div.well div.row-fluid').css({
-		'width': function(){
-			if ( $window.width() >= 1440 ) return ($window.width()*(2/3)-20);
-			else if ( $window.width() <= 960 ) return $window.width()-20; 
-			else return 960;
-		},
-		'min-width':790
-	});
+	var setWidth = function(el,min){
+		$(el).css({
+			'width': function(){
+				if ( $window.width() >= 1440 ) return ($window.width()*(2/3)-20);
+				else if ( $window.width() <= 960 ) return $window.width()-20; 
+				else return 960;
+			},
+			'min-width':min
+		});
+	}
+	setWidth('div.well div.row-fluid',790);
+	setWidth('div.navbar-inner div.container',790);
+	setWidth('div.container-fluid.gray',790);
 
 	clickPlayer();
 	enterPlayer();
@@ -287,6 +258,7 @@ $(document).ready( function(){
 		$('a.btn.dropdown-toggle span.current-stat').text(statistic);
 		getPlayers( statistic, type );
 		drawGraph();
+		lineReg();
 	});
 
 	$('.definition').popover();
