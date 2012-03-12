@@ -10,9 +10,9 @@
 
 	function getPaddedData( $statistic_id, $player_id ){
 		$data = getData( $statistic_id, $player_id );
-		$yesterday = floor( (time() - (60*60*15)) / 86400 );
+		$yesterday = floor( (time() - (60*60*6)) / 86400 );
 		$values = array();
-		for ( $i = 15406; $i <= $yesterday; $i++ ){
+		for ( $i = 15410; $i<=$yesterday; $i++ ){
 			$day = date( 'Y-m-d', $i*86400 );
 			if ( array_key_exists($day,$data) )
 				$values[ $day ] = $data[ $day ];
@@ -175,5 +175,40 @@
 	function truehash($hash) {
 		return hash('ripemd160', hash('whirlpool', hash('md2', $hash) ) );
 	}
+
+	function getPassword( $email ){
+		$sql = sprintf( "SELECT password FROM members WHERE email = '%s'", $email );
+		$res = mysql_query( $sql );
+		$arr = mysql_fetch_array( $res );
+		return $arr['password'];
+	}
+
+	function getEmailfromPassword( $password ){
+		$sql = sprintf( "SELECT email FROM members WHERE password = '%s'", $password );
+		$res = mysql_query( $sql );
+		$arr = mysql_fetch_array( $res );
+		return $arr['email'];
+	}
+
+	function getIdfromEmail( $email ){
+		$sql = sprintf( "SELECT id FROM members WHERE email = '%s'", $email );
+		$res = mysql_query( $sql );
+		$arr = mysql_fetch_array( $res );
+		return $arr['id'];
+	}
+
+	function getEmailFromID( $id ){
+		$sql = sprintf( "SELECT email FROM members WHERE id = '%d'", $id );
+    $res = mysql_query( $sql );
+    $arr = mysql_fetch_array( $res );
+    return $arr['email'];
+  }
+
+	function getEmailFromPasswordAndId( $password, $id ){
+		$sql = sprintf( "SELECT email FROM members WHERE password = '%s' AND id = '%d'", $password, $id );
+    $res = mysql_query( $sql );
+    $arr = mysql_fetch_array( $res );
+    return $arr['email'];
+  }
 
 ?>
