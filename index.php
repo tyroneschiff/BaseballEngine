@@ -1,3 +1,4 @@
+<? require "/home/tyrone/baseballengine1.2/run.php"; ?>
 <html>
 	<head>
 		<!-- Input Styling -->
@@ -13,187 +14,8 @@
 		<!-- Favicon -->
 		<link href="/images/favicon.ico" rel="icon" type="image/x-icon" />
 
-		<style>
-			html {
-				height:100%;
-			}
-			body {
-				padding-top:0px;
-				font-family: 'Ubuntu', sans-serif;
-				height:100%;
-			}
-			#graph {
-				width:960px;
-				margin:auto;
-			}
-			.navbar {
-				margin-bottom:1px;
-			}
-			.navbar-inner {
-				border-radius: 0;
-			}
-			.navbar .brand {
-				font-family: 'Acme', sans-serif;
-				font-size:24px;
-				letter-spacing:1px;
-			}
-			ul.dropdown-menu li span {
-				font-size:11px;
-				padding:2px 3px;
-				background:#000;
-				color:white;
-				border-radius:4px;
-				font-weight:normal;
-				float:right;
-				margin-right:3px;
-				position:relative;
-				top:1px;
-			}
-			.dropdown-menu a {
-				clear:none;
-				white-space:normal;
-			}
-			.dropdown-menu a.definition {
-				line-height:18px;
-			}
-			div.btn-group a.btn.dropdown-toggle {
-				min-width:96px;
-			}
-			form.form-inline {
-				margin:6px 3px 0px 3px;
-			}
-			form.form-inline input.input-small {
-				height:27px;
-				font-size:10px;
-			}
-			form.form-inline button.btn.btn-inverse {
-				padding:4px 10px;
-				margin:0px;
-			}
-			.input-small {
-				width:120px;
-			}
-			div.well {
-				padding:14px 0px 14px 0px;
-			}
-			div.well div.row-fluid {
-				width:960px;
-				margin:auto;
-			}
-			div.stat-select-Batter, div.stat-select-Pitcher {
-				margin-left:10px;
-				text-align:left;
-				display:inline-block;
-			}
-			span.current-stat {
-				font-size:14px;
-			}
-			div.player-select {
-				margin-left:4px;
-				display:inline-block;
-			}
-			div.position-select {
-				min-width:132px;
-				display:inline-block;
-				float:right;
-			}
-			input.span2.player {
-				margin-bottom:0;
-				height:28px;
-				padding-top:3px;
-				font-size:14px;
-				display:inline-block;
-				font-family: 'Ubuntu', sans-serif;
-				margin-left:8px;
-			}
-			input[class*="span"], select[class*="span"], textarea[class*="span"], .uneditable-input {
-				float:left;	
-			}
-			.modal {
-				max-height:600px;
-			}
-			div#goPro div.modal-header h3 {
-				font-family: 'Acme', sans-serif;
-				font-size:24px;
-			}
-			div#goPro div.modal-body {
-				padding: 15px 15px 0px 15px;
-			}
-			div#goPro div.modal-body p.well {
-				margin-bottom:10px;
-				font-family: 'Ubuntu', sans-serif;
-			}
-			div.expiry-wrapper select {
-				width:auto;
-			}
-			form#payment-form.form-vertical label.error {
-				display:inline-block;
-				margin-left:10px;
-				color:red;
-				font-weight:normal !important;
-				position:relative;
-				top:-3px;
-			}
-			form#payment-form.form-vertical div.well {
-				margin-bottom:10px;
-				padding:19px;
-			}
-			form#payment-form.form-vertical div.well label {
-				font-weight:bold;
-			}
-			form#payment-form.form-vertical div.well input.required {
-				height:27px;
-				width:240px;
-			}
-			form#payment-form.form-vertical div.well input.card-cvc.stripe-sensitive.required {
-				width:80px;
-			}
-			img[name=processing] {
-				float:right;
-				display:none;
-				position:relative;
-				top:4px;
-			}
-			button[name=submit-button] {
-				font-size:14px;
-			}
-			i.icon-shopping-cart.icon-white {
-				position:relative;
-				top:1px;
-			}
-			div.well div.row span.span5 {
-				font-size:11px;
-			}
-			@media (max-width: 980px) {
-				li form.form-inline {
-					margin-left:13px;
-				}
-				input.span2.player {
-					font-size:12px;
-					margin-left:5px;
-					padding-top:5px;
-				}
-				span.current-stat {
-					font-size:12px;
-				}
-				div.position-select div.btn-group button {
-					font-size:11px;
-				}
-				div.btn-group a.btn.dropdown-toggle {
-					min-width:73px;
-				}
-			}
-			@media (min-width: 1200px) {
-				form#payment-form.form-vertical div.well div.row div.span2 {
-					width:130px;
-				}
-			}
-			@media (max-width: 979px) and (min-width: 768px) {
-				input.span2.player {
-					width:130px;
-				}
-			}
-		</style>
+		<!-- Page Specific Styling -->
+    <link rel="stylesheet" href="/css/style.css">
 		<title>The Baseball Engine</title>
 	</head>
 <body>
@@ -231,6 +53,12 @@
 	<!-- Begin well -->
 	<div class="well">
 		<div class="row-fluid">
+			<div class="position-select">
+				<div class="btn-group" data-toggle="buttons-radio">
+					<button class="btn active" data-pos="Batter">Batters</button>
+					<button class="btn" data-pos="Pitcher">Pitchers</button>
+				</div>
+			</div><!-- end position-select -->
 			<div class="stat-select-Batter">
 				<div class="btn-group">
 					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
@@ -248,28 +76,29 @@
 							<a href="#" rel="popover" data-content="A triple is the act of a batter safely reaching third base after hitting the ball." data-original-title="Triples" class="definition">Triples</a>
 							<a href="#" rel="popover" data-content="A home run is scored when the ball is hit so that the batter is able to reach home safely in one play without any errors being committed by the defensive team in the process." data-original-title="Home Runs" class="definition">Home Runs</a>
 							<a href="#" rel="popover" data-content="When a runner scores a run resulting from a player's at bat." data-original-title="RBI" class="definition">RBI</a>
-							<a href="#" rel="popover" data-content="A stolen base occurs when a baserunner successfully advances to the next base while the pitcher is delivering the ball to home plate." data-original-title="Stolen Bases" class="definition">SB</a>
-							<a href="#" rel="popover" data-content="When the baserunner attempts to advance or lead off from one base to another without the ball being batted and then is tagged out by a fielder while making the attempt." data-original-title="Caught Stealing" class="definition">CS</a>
-							<a href="#" rel="popover" data-content="A based on balls is credited to a batter when a batter receives four pitches that the umpire calls balls. It is better known as a walk." data-original-title="Base on Balls" class="definition">BB</a>
 							<a href="#" rel="popover" data-content="A strikeout occurs when a batter receives three strikes during hit time at bat." data-original-title="Strikeout" class="definition">K</a>
-							<a href="#" rel="popover" data-content="A measure of how often a batter reaches base for any reason other than a fielding error, fielder's choice, dropped/uncaught third strike, fielder's obstruction, or catcher's interference." data-original-title="On-Base Percentage" class="definition">OBP</a>
-							<a href="#" rel="popover" data-content="A mesure of the powwer of a hitter. It is calculated as total bases divided by at bats." data-original-title="Slugging percentage" class="definition">SLG</a>
-							<a href="#" rel="popover" data-content="A sabermetric baseball statistic calculated as the sum of a player's on-base percentage and slugging percentage." data-original-title="On-base plus Slugging" class="definition">OPS</a>
-							<a href="#" rel="popover" data-content="The total number of games in which a player has participated." data-original-title="Games Played" class="definition">GP</a>
-							<a href="#" rel="popover" data-content="The number of games in which the player started the game in the starting lineup." data-original-title="Games Started" class="definition">GS</a>
-						 	<a href="#" rel="popover" data-content="Total bases refers to the number of bases a player has gained with hits, i.e., the sum of his hits weighted by 1 for a single, 2 for a double, 3 for a triple and 4 for a home run. Only bases attained from hits count toward this total." data-original-title="Total Bases" class="definition">TB</a>
-						 	<a href="#" rel="popover" data-content="A batter's act of deliberately bunting the ball in a manner that allows a runner on base to advance to another base." data-original-title="Sacrifice Hit/Bunt" class="definition">SH</a>
-						 	<a href="#" rel="popover" data-content="A sacrifice fly is a batted ball that satisfies four criteria: [1]: There are fewer than two outs when the ball is hit. [2]: The ball is hit to the outfield. [3]: The batter is put out because an outfielder (or an infielder running in the outfield) catches the ball on the fly (or the batter would have been out if not for an error). [4]: A runner who is already on base scores on the play." data-original-title="Sacrifice Fly" class="definition">SF</a>
-						 	<a href="#" rel="popover" data-content="Measures the times when a batter hits a ground ball that leads to a double play being executed by the defense without a fielding error on either of the putouts." data-original-title="Grounded into Double Play" class="definition">GIDP</a>
-						 	<a href="#" rel="popover" data-content="The sum total of a player's at-bats, base on balls (walks), times hit by pitch, sacrifice flies, sacrifice bunts, or times reaching base due to defensive interference." data-original-title="Total Plate Appearances" class="definition">TPA</a>
-						 	<a href="#" rel="popover" data-content="Measures the times in which a player or a piece of equipment, excluding his bat, is contacted by the ball during a pitch." data-original-title="Hit by Pitch" class="definition">HBP</a>
-						 	<a href="#" rel="popover" data-content="Records when the pitcher deliberately walks a batter by throwing the ball, known as an Intentional Ball, away from the batter preventing them from making a hit on the ball. The batter is automatically allowed to move to first base without risk of being put out. Both the batter and the pitcher receive a Intentional Base on Balls (IBB) when this occurs." data-original-title="Intentional Walk" class="definition">IBB</a>
-						 	<a href="#" rel="popover" data-content="The number of consecutive official games in which a player gets at least one base hit." data-original-title="Hitting Streak" class="definition">HS</a>
-						 	<a href="#" rel="popover" data-content="The number of at bats a batter has when there is at least one player on either second or third base." data-original-title="At Bats - Runners in Scoring Position" class="definition">AB (RISP)</a>
-						 	<a href="#" rel="popover" data-content="The number of hits a batter has when there is at least one player on either second or third base." data-original-title="Hits - Runners in Scoring Position" class="definition">Hits (RISP)</a>
-						 	<a href="#" rel="popover" data-content="A batter's batting average when there is at least one player on either second or third base." data-original-title="Average - Runners in Scoring Position" class="definition">Avg (RISP)</a>
-						<li class="divider"></li>
-						<li>
+							<a href="#" rel="popover" data-content="A stolen base occurs when a baserunner successfully advances to the next base while the pitcher is delivering the ball to home plate." data-original-title="Stolen Bases" class="definition">SB</a>
+							</li>
+							<li class="divider"></li>
+							<li>
+							<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="When the baserunner attempts to advance or lead off from one base to another without the ball being batted and then is tagged out by a fielder while making the attempt." data-original-title="Caught Stealing" class="definition pro-stat">CS</a>
+							<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="A based on balls is credited to a batter when a batter receives four pitches that the umpire calls balls. It is better known as a walk." data-original-title="Base on Balls" class="definition pro-stat">BB</a>
+							<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="A measure of how often a batter reaches base for any reason other than a fielding error, fielder's choice, dropped/uncaught third strike, fielder's obstruction, or catcher's interference." data-original-title="On-Base Percentage" class="definition pro-stat">OBP</a>
+							<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="A mesure of the powwer of a hitter. It is calculated as total bases divided by at bats." data-original-title="Slugging percentage" class="definition pro-stat">SLG</a>
+							<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="A sabermetric baseball statistic calculated as the sum of a player's on-base percentage and slugging percentage." data-original-title="On-base plus Slugging" class="definition pro-stat">OPS</a>
+							<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="The total number of games in which a player has participated." data-original-title="Games Played" class="definition pro-stat">GP</a>
+							<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="The number of games in which the player started the game in the starting lineup." data-original-title="Games Started" class="definition pro-stat">GS</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="Total bases refers to the number of bases a player has gained with hits, i.e., the sum of his hits weighted by 1 for a single, 2 for a double, 3 for a triple and 4 for a home run. Only bases attained from hits count toward this total." data-original-title="Total Bases" class="definition pro-stat">TB</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="A batter's act of deliberately bunting the ball in a manner that allows a runner on base to advance to another base." data-original-title="Sacrifice Hit/Bunt" class="definition pro-stat">SH</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="A sacrifice fly is a batted ball that satisfies four criteria: [1]: There are fewer than two outs when the ball is hit. [2]: The ball is hit to the outfield. [3]: The batter is put out because an outfielder (or an infielder running in the outfield) catches the ball on the fly (or the batter would have been out if not for an error). [4]: A runner who is already on base scores on the play." data-original-title="Sacrifice Fly" class="definition pro-stat">SF</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="Measures the times when a batter hits a ground ball that leads to a double play being executed by the defense without a fielding error on either of the putouts." data-original-title="Grounded into Double Play" class="definition pro-stat">GIDP</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="The sum total of a player's at-bats, base on balls (walks), times hit by pitch, sacrifice flies, sacrifice bunts, or times reaching base due to defensive interference." data-original-title="Total Plate Appearances" class="definition pro-stat">TPA</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="Measures the times in which a player or a piece of equipment, excluding his bat, is contacted by the ball during a pitch." data-original-title="Hit by Pitch" class="definition pro-stat">HBP</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="Records when the pitcher deliberately walks a batter by throwing the ball, known as an Intentional Ball, away from the batter preventing them from making a hit on the ball. The batter is automatically allowed to move to first base without risk of being put out. Both the batter and the pitcher receive a Intentional Base on Balls (IBB) when this occurs." data-original-title="Intentional Walk" class="definition pro-stat">IBB</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="The number of consecutive official games in which a player gets at least one base hit." data-original-title="Hitting Streak" class="definition pro-stat">HS</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="The number of at bats a batter has when there is at least one player on either second or third base." data-original-title="At Bats - Runners in Scoring Position" class="definition">AB (RISP)</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="The number of hits a batter has when there is at least one player on either second or third base." data-original-title="Hits - Runners in Scoring Position" class="definition">Hits (RISP)</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="A batter's batting average when there is at least one player on either second or third base." data-original-title="Average - Runners in Scoring Position" class="definition">Avg (RISP)</a>
 						 	<span>Pro</span><a href="#goPro" rel="popover" data-toggle="modal" data-content="The number of at bats divided by the number of home runs." data-original-title="Home Run Rate" class="definition pro-stat">HR Rate</a>
 						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="The number of at bats divided by the number of runs batted in." data-original-title="RBI Rate" class="definition pro-stat">RBI Rate</a>
 						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="The number of at bats divided by the number of walks." data-original-title="Base on Bals Rate" class="definition pro-stat">BB Rate</a>
@@ -301,40 +130,40 @@
 					<ul class="dropdown-menu">
 						<li>
 							<a href="#" rel="popover" data-content="The Baseball Engine's method for ranking players. Uses aspects of Wins, SO, ERA, WHIP, BAA, Saves, MB9, & IP" data-original-title="BE Score" class="definition">BE Score</a>
-							<a href="#" rel="popover" data-content="The total number of games in which a player has participated." data-original-title="Games Played" class="definition">GP</a>
-							<a href="#" rel="popover" data-content="Games started indicates the number of games that a pitcher has started for his team." data-original-title="Games Started" class="definition">GS</a>
 							<a href="#" rel="popover" data-content="The number of innings a pitcher has completed, measured by the number of batters and baserunners that are put out while the pitcher on the pitching mound in a game." data-original-title="Innings Pitched" class="definition">IP</a>
 							<a href="#" rel="popover" data-content="The winning pitcher is defined as the pitcher who last pitched prior to the half-inning when the winning team took the lead for the last time." data-original-title="Wins" class="definition">Wins</a>
 							<a href="#" rel="popover" data-content="The losing pitcher is the pitcher who allows the go-ahead run to reach base for a lead that the winning team never relinquishes." data-original-title="Losees" class="definition">Losses</a>
 							<a href="#" rel="popover" data-content="Awarded to a pitcher who successfully maintains the lead until the end of the game. Usually these conditions apply: [1]: He is the finishing pitcher in a game won by his team, [2]: He is not the winning pitcher, and [3]: He is crddited with at least 1/3 of an inning pitched. " data-original-title="Saves" class="definition">Saves</a>
-							<a href="#" rel="popover" data-content="When a pitcher [1] enters the game with a lead of three or fewer runs and pitches at least one inning, [2] enters the game with the potential tying run on base, at bat, or on deck, or [3] pitches three or more innings with a lead and is credited with a save by the official scorer." data-original-title="Save Opportunities" class="definition">SVO</a>
+							<a href="#" rel="popover" data-content="The number of strikeouts the pitcher has thrown." data-original-title="Strikeouts" class="definition">SO</a>
 							<a href="#" rel="popover" data-content="The number of hits the pitcher has allowed." data-original-title="Hits Allowed" class="definition">Hits</a>
 							<a href="#" rel="popover" data-content="The number of runs the pitcher has allowed." data-original-title="Runs Allowed" class="definition">Runs</a>
 							<a href="#" rel="popover" data-content="The number of home runs the pitcher has allowed." data-original-title="Home Runs Allowed" class="definition">Home Runs</a>
 							<a href="#" rel="popover" data-content="An earned run is any run for which the pitcher is held accountable (i.e., the run scored as a result of normal pitching, and not due to a fielding error or a passed ball)." data-original-title="Earned Runs" class="definition">ER</a>
 							<a href="#" rel="popover" data-content="The mean of earned runs given up by a pitcher per nine innings pitched. Fomula: ERA = 9*(Earned Runs/Innings Pitched)" data-original-title="Earned Run Average" class="definition">ERA</a>
-							<a href="#" rel="popover" data-content="The number of walks the pitcher has allowed. This measure includes intentional walks." data-original-title="Base on Balls Allowed" class="definition">BB</a>
-							<a href="#" rel="popover" data-content="The number of strikeouts the pitcher has thrown." data-original-title="Strikeouts" class="definition">SO</a>
-							<a href="#" rel="popover" data-content="The total number of pitches the pitcher has thrown." data-original-title="Total Pitches" class="definition">TP</a>
-							<a href="#" rel="popover" data-content="A sabermetric measurement of the number of baserunners a pitcher has allowed per inning pitched. It is a measure of a pitcher's ability to prevent batters from reaching base." data-original-title="Walks plus hits per inning pitcher" class="definition">WHIP</a>
-							<a href="#" rel="popover" data-content="The act of a pitcher pitching an entire game without the benefit of a relief pitcher." data-original-title="Complete Game" class="definition">CG</a>
-						 	<a href="#" rel="popover" data-content="A hold is awarded to a relief pitcher who meets the following three conditions: [1]: Enters the game in a save situation, [2]: Records at least one out, and [3]: Leaves the game before it has ended without his team having relinquished the lead at any point and does not record a save." data-original-title="Hold" class="definition">HLD</a>
-						 	<a href="#" rel="popover" data-content="A relief pitcher is credited with a game finished if he is the last pitcher to pitch for his team in a game. A starting pitcher is not credited with a game finished for pitching a complete game." data-original-title="Games Finished" class="definition">GF</a>
-						 	<a href="#" rel="popover" data-content="A shutout refers to the act by which a single pitcher pitches a complete game and does not allow the opposing team to score a run." data-original-title="Shutout" class="definition">SHO</a>
-						 	<a href="#" rel="popover" data-content="A quality start is a statistic for a starting pitcher defined as a game in which the pitcher completes at least six innings and permits no more than three earned runs." data-original-title="Quality Start" class="definition">QS</a>
-						 	<a href="#" rel="popover" data-content="The number of batters who made a plate appearance before the pitcher in a game or in a season." data-original-title="Total Batters Faced" class="definition">TBF</a>
-						 	<a href="#" rel="popover" data-content="Any number of illegal actions or motions that a pitcher may not commit constitute as a balk." data-original-title="Balk" class="definition">BK</a>
-						 	<a href="#" rel="popover" data-content="A wild pitch is charged against a pitcher when his pitch is too high, too short, or too wide of home plate for the catcher to control with ordinary effort, thereby allowing a baserunner, perhaps even the batter-runner on strike three or ball four, to advance." data-original-title="Wild Pitch" class="definition">WP</a>
-						 	<a href="#" rel="popover" data-content="The total number of singles allowed by the pitcher." data-original-title="Singles Allowed" class="definition">SA</a>
-						 	<a href="#" rel="popover" data-content="The total number of doubles allowed by the pitcher." data-original-title="Doubles Allowed" class="definition">DA</a>
-						 	<a href="#" rel="popover" data-content="The total number of triples allowed by the pitcher." data-original-title="Triples Allowed" class="definition">TA</a>
-						 	<a href="#" rel="popover" data-content="The number of innings pitched divided by the number of games started by the pitcher." data-original-title="Innings per Start" class="definition">I/S</a>
-						 	<a href="#" rel="popover" data-content="A measure of how frequently a pitcher gets batters out on ground balls versus fly balls. Formula: (Ground Outs) / (Fly Outs)." data-original-title="Ground ball fly ball ratio" class="definition">G/F</a>
-						 	<a href="#" rel="popover" data-content="A measure of hits, walks, and hit batsmen allowed per nine innings." data-original-title="Men on Base per 9 Innings" class="definition">MB9</a>
-						 	<a href="#" rel="popover" data-content="A measure of the effectiveness of a relief pitcher who enters a game with runners on base." data-original-title="Inherited runs allowed to score" class="definition">IRS</a>
 						</li>
-						<li class="divider"></li>
-						<li>
+            <li class="divider"></li>
+            <li>
+							<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="The number of walks the pitcher has allowed. This measure includes intentional walks." data-original-title="Base on Balls Allowed" class="definition pro-stat">BB</a>
+							<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="A sabermetric measurement of the number of baserunners a pitcher has allowed per inning pitched. It is a measure of a pitcher's ability to prevent batters from reaching base." data-original-title="Walks plus hits per inning pitcher" class="definition pro-stat">WHIP</a>
+							<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="The total number of games in which a player has participated." data-original-title="Games Played" class="definition pro-stat">GP</a>
+              <span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="Games started indicates the number of games that a pitcher has started for his team." data-original-title="Games Started" class="definition pro-stat">GS</a>
+							<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="The act of a pitcher pitching an entire game without the benefit of a relief pitcher." data-original-title="Complete Game" class="definition pro-stat">CG</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="A hold is awarded to a relief pitcher who meets the following three conditions: [1]: Enters the game in a save situation, [2]: Records at least one out, and [3]: Leaves the game before it has ended without his team having relinquished the lead at any point and does not record a save." data-original-title="Hold" class="definition pro-stat">HLD</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="When a pitcher [1] enters the game with a lead of three or fewer runs and pitches at least one inning, [2] enters the game with the potential tying run on base, at bat, or on deck, or [3] pitches three or more innings with a lead and is credited with a save by the official scorer." data-original-title="Save Opportunities" class="definition pro-stat">SVO</a>
+							<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="A relief pitcher is credited with a game finished if he is the last pitcher to pitch for his team in a game. A starting pitcher is not credited with a game finished for pitching a complete game." data-original-title="Games Finished" class="definition pro-stat">GF</a>
+						  <span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="A shutout refers to the act by which a single pitcher pitches a complete game and does not allow the opposing team to score a run." data-original-title="Shutout" class="definition pro-stat">SHO</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="A quality start is a statistic for a starting pitcher defined as a game in which the pitcher completes at least six innings and permits no more than three earned runs." data-original-title="Quality Start" class="definition pro-stat">QS</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="The number of batters who made a plate appearance before the pitcher in a game or in a season." data-original-title="Total Batters Faced" class="definition pro-stat">TBF</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="Any number of illegal actions or motions that a pitcher may not commit constitute as a balk." data-original-title="Balk" class="definition pro-stat">BK</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="A wild pitch is charged against a pitcher when his pitch is too high, too short, or too wide of home plate for the catcher to control with ordinary effort, thereby allowing a baserunner, perhaps even the batter-runner on strike three or ball four, to advance." data-original-title="Wild Pitch" class="definition pro-stat">WP</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="The total number of pitches the pitcher has thrown." data-original-title="Total Pitches" class="definition pro-stat">TP</a>
+							<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="The total number of singles allowed by the pitcher." data-original-title="Singles Allowed" class="definition pro-stat">SA</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="The total number of doubles allowed by the pitcher." data-original-title="Doubles Allowed" class="definition pro-stat">DA</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="The total number of triples allowed by the pitcher." data-original-title="Triples Allowed" class="definition pro-stat">TA</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="The number of innings pitched divided by the number of games started by the pitcher." data-original-title="Innings per Start" class="definition pro-stat">I/S</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="A measure of how frequently a pitcher gets batters out on ground balls versus fly balls. Formula: (Ground Outs) / (Fly Outs)." data-original-title="Ground ball fly ball ratio" class="definition pro-stat">G/F</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="A measure of hits, walks, and hit batsmen allowed per nine innings." data-original-title="Men on Base per 9 Innings" class="definition pro-stat">MB9</a>
+						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="A measure of the effectiveness of a relief pitcher who enters a game with runners on base." data-original-title="Inherited runs allowed to score" class="definition pro-stat">IRS</a>
 							<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="The percentage of the time a pitcher is awarded a win as opposed to a loss. Formula: Win % = Wins/(Wins + Losses)" data-original-title="Winning Percentage" class="definition pro-stat">Win %</a>
 							<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="The number of innings pitched divided by the number strikeouts thrown." data-original-title="Strikeout Rate" class="definition pro-stat">SO Rate</a>
 						 	<span>Pro</span><a href="#goPro" data-toggle="modal" rel="popover" data-content="A statistic that measures a pitcher's ability to prevent hits during official at bats. Formula: BAA = Hits Allowed/(Batters Faced - Walks - Hit Batsmen - Sacrifice Hits - Sacrifice Flies)" data-original-title="Batting Average Against" class="definition pro-stat">BAA</a>
@@ -353,12 +182,6 @@
 				<input type="text" class="span2 player" data-provide="typeahead">
 				<input type="text" class="span2 player" data-provide="typeahead">
 			</div><!-- player-select end -->
-			<div class="position-select">
-				<div class="btn-group" data-toggle="buttons-radio">
-					<button class="btn active" data-pos="Batter">Batters</button>
-					<button class="btn" data-pos="Pitcher">Pitchers</button>
-				</div>
-			</div><!-- end position-select -->
 		</div><!-- end row-fluid -->
 	</div><!-- end well -->
 
@@ -367,7 +190,9 @@
 		<div id="graph"></div>
 	</div>
 
-	<div class="container-fluid" style="background-color:#666;height:660px;">
+	<div class="container-fluid gray" style="border-top:1px solid #EEE;margin:auto;">
+		<a href="#goPro" data-toggle="modal" style="float:left;padding:10px;">Baseball Engine Pro</a>
+		<span style="float:right;padding:10px;">&copy; <a href="/" target="_blank"></a>2012 Baseball Engine | <a href="#contact" data-toggle="modal">Contact Me</a> | Last updated: <? echo date(' M j, y'); ?></span>
 	</div>
 
 	<!-- Begin goPro -->
@@ -387,7 +212,7 @@
 					<label>Password</label>
 					<input type="password" name="passwordPro" class="required" />
 					<label>Card Number</label>
-					<input maxlength="20" autocomplete="off" class="card-number stripe-sensitive required" type="text" />
+					<input maxlength="20" autocomplete="off" class="card-number stripe-sensitive required" type="text" id="credit-card"/>
 					<div class="row"><!-- Begin row -->
 						<div class="span2"><!-- Begin span2 -->
 							<label>Expiration</label>
@@ -411,25 +236,42 @@
 			<div class="modal-footer"><!-- Begin modal-footer -->
 				<span id="siteseal" style="float:left;"><script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=UGOhB3pNNiWUNmyNPrQHoehzchqvnq9VLLwlhfYkj9yWaUUjkorY"></script></span>
 				<button type="submit" name="submit-button" class="btn btn-primary"><i class="icon-shopping-cart icon-white"></i> Charge Me $10.00</button>
-				<img src="images/ajax-loader.gif" name="processing">
+				<img src="/images/ajax-loader.gif" name="processing">
 			</form><!-- End form -->
 		</div><!-- End modal-footer -->
 	</div><!-- end goPro -->
 
+	<div class="modal hide fade in" id="contact">
+		<div class="modal-header">
+			<a class="close" data-dismiss="modal">x</a>
+			<a href="/"><h3>The Baseball Engine</h3></a>
+		</div>
+		<div class="modal-body">
+			<div class="well">
+				<label>Your e-mail address</label>
+				<input type="text" name="emailContact" autofocus>
+				<label>Subject</label>
+				<input type="text" name="subject">
+				<label>Write your message below</label>
+				<textarea rows="7" name="message"></textarea>
+			</div>
+			<div class="alert alert-success" style="display:none;">
+				<span style='font-size:14px;'>Thanks for getting in touch! I'll respond within the next 24-48 hours. Thank you for using The Baseball Engine.</span>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="submit" class="btn btn-inverse">Contact me</button>
+			<button class="btn btn-inverse" data-dismiss="modal" name="closeContact" style="display:none;">Close</button>
+			<img src="/images/ajax-loader.gif" name="processing">
+		</div>
+	</div>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.8.1/jquery.validate.min.js"></script>
-<script type="text/javascript" src="bootstrap/docs/assets/js/google-code-prettify/prettify.js"></script>
-<script type="text/javascript" src="bootstrap/docs/assets/js/bootstrap-collapse.js"></script>
-<script type="text/javascript" src="bootstrap/docs/assets/js/bootstrap-typeahead.js"></script>
-<script type="text/javascript" src="bootstrap/docs/assets/js/bootstrap-dropdown.js"></script>
-<script type="text/javascript" src="bootstrap/docs/assets/js/bootstrap-button.js"></script>
-<script type="text/javascript" src="bootstrap/docs/assets/js/bootstrap-modal.js"></script>
-<script type="text/javascript" src="bootstrap/docs/assets/js/bootstrap-tooltip.js"></script>
-<script type="text/javascript" src="bootstrap/docs/assets/js/bootstrap-popover.js"></script>
 <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
 <script type="text/javascript" src="stripe/stripe.js"></script>
-<script type="text/javascript" src="highcharts/js/highcharts.min.js"></script>
+<script type="text/javascript" src="/js/default.js"></script>
 <script type="text/javascript" src="drawgraph.js"></script>
+<script type="text/javascript" src="/contact/js/script.js"></script>
 </body>
 </html>
